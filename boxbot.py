@@ -15,8 +15,15 @@ from livinghinge import create_living_hinge_pattern, detect_straight_segments
 
 
 class Boxbot(inkex.EffectExtension):
-    CUT_STYLE = {
-        "stroke": "#ff0000",
+    CUT_OUTER_STYLE = {
+        "stroke": "#cc0000",
+        "stroke-width": "1mm",
+        "-inkscape-stroke": "hairline",
+        "fill": "none",
+    }
+
+    CUT_INNER_STYLE = {
+        "stroke": "#ff66cc",
         "stroke-width": "1mm",
         "-inkscape-stroke": "hairline",
         "fill": "none",
@@ -114,7 +121,7 @@ class Boxbot(inkex.EffectExtension):
             create_tab
         )
         for tab in self.tabs:
-            tab.style = self.CUT_STYLE
+            tab.style = self.CUT_INNER_STYLE
             group.append(tab)
 
         bottom_tabs_label = self.create_label("bottom tabs", group.bounding_box(), "bottom_tabs_label")
@@ -129,7 +136,7 @@ class Boxbot(inkex.EffectExtension):
         bottom_path = PathElement()
         bottom_path.set_id(self.svg.get_unique_id("bottom_path"))
         bottom_path.set('d', str(self.original_path))
-        bottom_path.style = self.CUT_STYLE
+        bottom_path.style = self.CUT_OUTER_STYLE
         bottom_group.append(bottom_path)
 
         bottom_inset = self.bottom_inset.copy()
@@ -155,7 +162,7 @@ class Boxbot(inkex.EffectExtension):
         top_tabs_original = PathElement()
         top_tabs_original.set_id(self.svg.get_unique_id("top_tabs_original"))
         top_tabs_original.set('d', str(self.original_path))
-        top_tabs_original.style = self.CUT_STYLE
+        top_tabs_original.style = self.CUT_OUTER_STYLE
         top_tabs_group.append(top_tabs_original)
 
         top_tabs_inset = self.inset_path.copy()
@@ -175,7 +182,7 @@ class Boxbot(inkex.EffectExtension):
             self.top_hole_inset = PathElement()
             self.top_hole_inset.set_id(self.svg.get_unique_id("top_hole_inset"))
             self.top_hole_inset.set('d', top_hole_inset_d)
-            self.top_hole_inset.style = self.CUT_STYLE
+            self.top_hole_inset.style = self.CUT_OUTER_STYLE
             top_tabs_group.append(self.top_hole_inset)
         except ValueError:
             pass
@@ -213,7 +220,7 @@ class Boxbot(inkex.EffectExtension):
                 magnet = PathElement()
                 magnet.set_id(self.svg.get_unique_id(f"magnet_{index}"))
                 magnet.set('d', path_data)
-                magnet.style = self.CUT_STYLE if self.options.hide_magnets else self.META_STYLE
+                magnet.style = self.CUT_OUTER_STYLE if self.options.hide_magnets else self.META_STYLE
                 return magnet
 
             if self.options.magnet_type == "rectangle":
@@ -245,7 +252,7 @@ class Boxbot(inkex.EffectExtension):
         top_path = PathElement()
         top_path.set_id(self.svg.get_unique_id("top_path"))
         top_path.set('d', str(self.original_path))
-        top_path.style = self.CUT_STYLE
+        top_path.style = self.CUT_OUTER_STYLE
         top_group.append(top_path)
 
         top_inset = self.inset_path.copy()
@@ -267,7 +274,7 @@ class Boxbot(inkex.EffectExtension):
             for i, magnet in enumerate(self.magnets):
                 magnet_copy = magnet.copy()
                 magnet_copy.set_id(self.svg.get_unique_id(f"top_magnet_{i}"))
-                magnet_copy.style = self.META_STYLE if self.options.hide_magnets else self.CUT_STYLE
+                magnet_copy.style = self.META_STYLE if self.options.hide_magnets else self.CUT_OUTER_STYLE
                 top_group.append(magnet_copy)
 
         top_bbox = top_group.bounding_box()
@@ -294,7 +301,7 @@ class Boxbot(inkex.EffectExtension):
         side_rect = PathElement()
         side_rect.set_id(self.svg.get_unique_id("side_rect"))
         side_rect.set('d', rect_path_data)
-        side_rect.style = self.CUT_STYLE
+        side_rect.style = self.CUT_OUTER_STYLE
         side_rect.transform = inkex.Transform(translate=(offset_x, offset_y))
         side_group.append(side_rect)
 
@@ -404,7 +411,7 @@ class Boxbot(inkex.EffectExtension):
                     rect_height,
                     offset_x + hinge_start,
                     offset_y,
-                    self.CUT_STYLE,
+                    self.CUT_INNER_STYLE,
                     tab_positions=None,
                     segment_start=0
                 )
@@ -425,7 +432,7 @@ class Boxbot(inkex.EffectExtension):
         lid_top_path = PathElement()
         lid_top_path.set_id(self.svg.get_unique_id("lid_top_path"))
         lid_top_path.set('d', str(self.original_path))
-        lid_top_path.style = self.CUT_STYLE
+        lid_top_path.style = self.CUT_OUTER_STYLE
         lid_top_group.append(lid_top_path)
 
         lid_top_inset = self.inset_path.copy()
@@ -453,7 +460,7 @@ class Boxbot(inkex.EffectExtension):
         lid_middle_path = PathElement()
         lid_middle_path.set_id(self.svg.get_unique_id("lid_middle_path"))
         lid_middle_path.set('d', str(self.original_path))
-        lid_middle_path.style = self.CUT_STYLE
+        lid_middle_path.style = self.CUT_OUTER_STYLE
         lid_middle_group.append(lid_middle_path)
 
         lid_middle_inset = self.inset_path.copy()
@@ -463,7 +470,7 @@ class Boxbot(inkex.EffectExtension):
         for i, magnet in enumerate(self.magnets):
             lid_middle_magnet = magnet.copy()
             lid_middle_magnet.set_id(self.svg.get_unique_id(f"lid_middle_magnet_{i}"))
-            lid_middle_magnet.style = self.CUT_STYLE if self.options.hide_magnets else self.META_STYLE
+            lid_middle_magnet.style = self.CUT_OUTER_STYLE if self.options.hide_magnets else self.META_STYLE
             lid_middle_group.append(lid_middle_magnet)
 
         lid_middle_bbox_local = lid_middle_group.bounding_box()
@@ -481,7 +488,7 @@ class Boxbot(inkex.EffectExtension):
         lid_bottom_path = PathElement()
         lid_bottom_path.set_id(self.svg.get_unique_id("lid_bottom_path"))
         lid_bottom_path.set('d', str(self.original_path))
-        lid_bottom_path.style = self.CUT_STYLE
+        lid_bottom_path.style = self.CUT_OUTER_STYLE
         lid_bottom_group.append(lid_bottom_path)
 
         lid_bottom_inset = self.inset_path.copy()
@@ -491,7 +498,7 @@ class Boxbot(inkex.EffectExtension):
         for i, magnet in enumerate(self.magnets):
             lid_bottom_magnet = magnet.copy()
             lid_bottom_magnet.set_id(self.svg.get_unique_id(f"lid_bottom_magnet_{i}"))
-            lid_bottom_magnet.style = self.CUT_STYLE if not self.options.hide_magnets else self.META_STYLE
+            lid_bottom_magnet.style = self.CUT_OUTER_STYLE if not self.options.hide_magnets else self.META_STYLE
             lid_bottom_group.append(lid_bottom_magnet)
 
         lid_bottom_bbox_local = lid_bottom_group.bounding_box()
@@ -516,7 +523,7 @@ class Boxbot(inkex.EffectExtension):
             lid_fitting_path = PathElement()
             lid_fitting_path.set_id(self.svg.get_unique_id("lid_fitting_path"))
             lid_fitting_path.set('d', lid_fitting_path_d)
-            lid_fitting_path.style = self.CUT_STYLE
+            lid_fitting_path.style = self.CUT_OUTER_STYLE
             lid_fitting_group.append(lid_fitting_path)
 
             lid_fitting_bbox_local = lid_fitting_group.bounding_box()
@@ -557,7 +564,7 @@ class Boxbot(inkex.EffectExtension):
         self.original_path = doc_path.transform(layer_transform_inv)
         self.original_path_bbox = self.original_path.bounding_box()
 
-        selected_element.style = self.CUT_STYLE
+        selected_element.style = self.CUT_OUTER_STYLE
 
         tab_height = self.svg.unittouu(f"{self.options.material_thickness}{self.options.units}")
 
