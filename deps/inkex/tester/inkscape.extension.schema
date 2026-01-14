@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://purl.oclc.org/dsdl/schematron">
+<ns uri="http://www.inkscape.org/namespace/inkscape/extension" prefix="inx"/>
+  <pattern>
+    <title>duplicateOptionValues</title>
+    <rule context="//inx:param/inx:option">
+      <report test="preceding-sibling::inx:option/@value = @value">Warning: @value values should be unique for a given option.</report>
+    </rule>
+  </pattern>
+</schema>

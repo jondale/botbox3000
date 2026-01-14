@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<inkscape-extension xmlns="http://www.inkscape.org/namespace/inkscape/extension">
+  <name>Box Bot 3000</name>
+  <id>org.jondale.boxbox</id>
+  <param name="units" type="enum" gui-text="Units">
+    <item value="mm">mm</item>
+    <item value="in">in</item>
+    <item value="px">px</item>
+  </param>
+
+  <param name="notebook" type="notebook">
+    <page name="box" gui-text="Box">
+      <param name="generate_lid" type="bool" gui-text="Generate Lid">true</param>
+      <param name="material_thickness" type="float" min="0.0" max="1000" gui-text="Material Thickness">3.0</param>
+      <param name="box_height" type="float" min="0.0" max="1000" gui-text="Box Height">50.0</param>
+      <param name="top_hole_inset" type="float" min="0.0" max="1000" gui-text="Top Hole Inset">10.0</param>
+      <param name="kerf" type="float" min="0.0" max="10.0" gui-text="Kerf">0.1</param>
+    </page>
+
+    <page name="tabs" gui-text="Tabs">
+      <param name="num_tabs" type="int" min="0" max="1000" gui-text="Number of Tabs">8</param>
+      <param name="tab_inset" type="float" min="0.0" max="1000" gui-text="Tab Inset">5.0</param>
+      <param name="tab_width" type="float" min="0.1" max="1000" gui-text="Tab Width">6.0</param>
+      <param name="tab_start_offset" type="float" min="0.0" max="1000.0" gui-text="Tab Placement Offset">0.0</param>
+      <param name="tab_border_radius" type="float" min="0.0" max="10.0" gui-text="Tab Border Radius">0.5</param>
+    </page>
+
+    <page name="living_hinge" gui-text="Living Hinge">
+      <param name="generate_living_hinge" type="bool" gui-text="Generate Living Hinge">false</param>
+      <param name="hinge_length_percent" type="int" min="10" max="90" gui-text="Living Hinge Cut Length (%)">25</param>
+      <param name="hinge_gap" type="float" min="0.1" max="1000" gui-text="Living Hinge Gap">1.0</param>
+      <param name="hinge_spacing" type="float" min="0.1" max="1000" gui-text="Living Hinge Spacing">1.5</param>
+    </page>
+
+    <page name="magnets" gui-text="Magnets">
+      <param name="magnet_type" type="enum" gui-text="Magnet Type">
+        <item value="none">None</item>
+        <item value="rectangle">Rectangle</item>
+        <item value="circle">Circle</item>
+      </param>
+      <param name="rectangle_magnet_width" type="float" min="0.1" max="1000" gui-text="Rectangle Magnet Width">10.0</param>
+      <param name="rectangle_magnet_height" type="float" min="0.1" max="1000" gui-text="Rectangle Magnet Height">5.0</param>
+      <param name="circle_magnet_diameter" type="float" min="0.1" max="1000" gui-text="Circle Magnet Diameter">5.0</param>
+      <param name="num_magnets" type="int" min="0" max="1000" gui-text="Number of Magnets">4</param>
+      <param name="magnet_placement_offset" type="float" min="0.0" max="1000.0" gui-text="Magnet Placement Offset">0.0</param>
+      <param name="hide_magnets" type="bool" gui-text="Hide Magnets">true</param>
+    </page>
+  </param>
+
+  <dependency type="executable" location="extensions">boxbot.py</dependency>
+
+  <script>
+    <command location="inx" interpreter="python">boxbot.py</command>
+  </script>
+
+  <effect needs-live-preview="true">
+    <object-type>path</object-type>
+    <effects-menu>
+      <submenu name="Laser Tools"/>
+    </effects-menu>
+  </effect>
+</inkscape-extension>

@@ -1,0 +1,16 @@
+# Hidden files and directories (everything starting with .)
+.*
+
+# Python cache (but keep bundled deps/)
+__pycache__/
+*.py[cod]
+*$py.class
+.Python
+
+# But don't ignore this .gitignore file itself
+!.gitignore
+
+# IDEs
+*.swp
+*.swo
+*~
