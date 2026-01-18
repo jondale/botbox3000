@@ -182,7 +182,7 @@ class Boxbot(inkex.EffectExtension):
             self.top_hole_inset = PathElement()
             self.top_hole_inset.set_id(self.svg.get_unique_id("top_hole_inset"))
             self.top_hole_inset.set('d', top_hole_inset_d)
-            self.top_hole_inset.style = self.CUT_OUTER_STYLE
+            self.top_hole_inset.style = self.CUT_INNER_STYLE
             top_tabs_group.append(self.top_hole_inset)
         except ValueError:
             pass
